@@ -18,7 +18,7 @@ body{
     top: -80px;
     height: 120px;
     line-height: 120px;
-    padding-left: 44.5%;
+    text-align: center;
     transition: .2s all linear;
     z-index: 9;
 }
