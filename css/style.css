@@ -1,0 +1,68 @@
+@font-face {
+    font-family: "IkeaFont" ;
+    src: url(../font/IKEASans-Bold.ttf);
+}
+
+body{
+    margin: 0;
+}
+
+
+#header{
+    background-color: red;
+    font-family: "IkeaFont";
+    color: yellow;
+    text-shadow: 5px 2px blue;
+    position: sticky;
+    top: -80px;
+    height: 120px;
+    line-height: 120px;
+    /* padding-left: 40%; */
+    text-align: center;
+    /* transition: .2s all linear; */
+}
+#header span{
+    /* transition: .2s all linear; */
+    font-size: 100px;
+    position: relative;
+}
+html:not([data-scroll="0"]) #header span{
+    font-size: 30px;
+    /* transition: .2s all linear; */
+    line-height: 200px;
+}
+html:not([data-scroll="0"]) #header{
+    padding-left: 10px;
+    text-align: left;
+    /* transition: .2s all linear; */
+}
+
+
+
+#navbar{
+    background-color: yellow;
+    position: sticky;
+    top: 35px;
+}
+#cuerpo{
+    background-color: blue;
+    height: 150vh;
+}
+
+
+#decorador{
+    background-color: violet;
+    height: 1.8vh;
+    font-weight: bold;
+}
+#footer{
+    position: sticky;
+    bottom: -7vh;
+    background-color: green;
+    height: 10vh;
+    transition: all .1s linear;
+}
+#footer:hover{
+    bottom: 0;
+    transition: all .1s linear;
+}
