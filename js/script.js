@@ -30,7 +30,7 @@ function animar_titulo() {
     }
     animacion(letras)
 }
-// animar_titulo()
+animar_titulo()
 
 document.addEventListener('scroll', () => { document.documentElement.dataset.scroll = Number(window.scrollY > 50); });
 
@@ -47,11 +47,41 @@ function obtener_imagenes_carousel() {
 function carousel() {
     let carousel_div = $("#carousel")
     let imagenes = obtener_imagenes_carousel()
+    let imagenes_div = []
     for (let imagen of imagenes) {
         let image = $(document.createElement("img"))
         image.attr("src", imagen)
         carousel_div.append(image)
+        imagenes_div.push(image)
     }
+    let image = $(document.createElement("img"))
+    image.attr("src", imagenes[0])
+    carousel_div.append(image)
+    imagenes_div.push(image)
+
+
+    async function animacion(imagenes, indice = 1) {
+        let espera = new Promise(function (resolve) {
+            for (let imagen of imagenes) {
+                imagen.animate({ left: (-45 * indice) + "vh" }, 1000, () => resolve())
+            }
+        })
+
+        await espera
+        await new Promise(function (resolve) {
+            setTimeout(() => resolve(), 1000)
+        })
+
+        if (indice == imagenes.length - 1) {
+            for (let imagen of imagenes) {
+                imagen.css("left","0")
+            }
+            animacion(imagenes)
+        } else {
+            animacion(imagenes, indice + 1)
+        }
+    }
+    animacion(imagenes_div)
 }
 
 carousel()
