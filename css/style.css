@@ -5,6 +5,7 @@
 
 body{
     margin: 0;
+    overflow-x: hidden;
 }
 
 
@@ -17,24 +18,24 @@ body{
     top: -80px;
     height: 120px;
     line-height: 120px;
-    /* padding-left: 40%; */
-    text-align: center;
-    /* transition: .2s all linear; */
+    padding-left: 41%;
+    transition: .2s all linear;
 }
 #header span{
-    /* transition: .2s all linear; */
+    transition: .2s all linear;
     font-size: 100px;
     position: relative;
 }
-html:not([data-scroll="0"]) #header span{
+
+html[data-scroll="1"] #header span{
     font-size: 30px;
-    /* transition: .2s all linear; */
+    transition: .2s all linear;
     line-height: 200px;
 }
-html:not([data-scroll="0"]) #header{
+html[data-scroll="1"] #header{
     padding-left: 10px;
     text-align: left;
-    /* transition: .2s all linear; */
+    transition: .2s all linear;
 }
 
 
@@ -44,10 +45,28 @@ html:not([data-scroll="0"]) #header{
     position: sticky;
     top: 35px;
 }
+
+
+
+
 #cuerpo{
     background-color: blue;
     height: 150vh;
 }
+#carousel{
+    display: flex;
+    height: 45vh;
+    width: 100vw;
+    overflow: hidden;
+}
+#carousel img{
+    height: 100%;
+}
+
+
+
+
+
 
 
 #decorador{
