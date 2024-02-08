@@ -2,7 +2,7 @@
     font-family: "IkeaFont" ;
     src: url(../font/IKEASans-Bold.ttf);
 }
-
+*{border: 1px solid green; box-sizing: border-box;}
 body{
     margin: 0;
     overflow-x: hidden;
@@ -21,6 +21,7 @@ body{
     text-align: center;
     transition: .2s all linear;
     z-index: 9;
+    padding-right: 0%;
 }
 #header span{
     transition: .2s all linear;
@@ -35,7 +36,7 @@ html[data-scroll="1"] #header span{
 }
 html[data-scroll="1"] #header{
     padding-left: 10px;
-    text-align: left;
+    padding-right: 100%;
     transition: .2s all linear;
 }
 
@@ -62,14 +63,19 @@ html[data-scroll="1"] #header{
 .multiple>ul{
     position: absolute;
     top: 0;
-    left: -1px;
     background-color: green;
-    width: 60%;
+    width: 100%;
+    border: 2px solid black;
+    border-top: 0;
+    padding: 0;
 
 }
 .multiple li{
+    margin: 2px;
     width: 100%;
-
+    list-style-type: none;
+    text-align: left;
+    background-color: aqua;
 }
 .oculto>ul{
     display: none;
@@ -93,6 +99,11 @@ html[data-scroll="1"] #header{
     width: 45vh;
     position: relative;
     left: -0;
+}
+#carousel_controller{
+    text-align: center;
+    position: relative;
+    top: -20px;
 }
 
 
