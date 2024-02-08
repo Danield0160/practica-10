@@ -46,9 +46,32 @@ html[data-scroll="1"] #header{
     position: sticky;
     top: 35px;
     z-index: 9;
-
+    display: flex;
+    flex-direction: row;
+    
 }
-
+#navbar > div{
+    display: inline-block;
+    border: 1px solid black;
+    flex: 1;
+    text-align: center;
+    margin: 7px 5px;
+    box-shadow: 1px 1px 1px black;
+}
+#navbar .desplegable{
+    height: 0;
+}
+.oculto{
+    display: none;
+}
+#navbar .item{
+    position: relative;
+    background-color: yellow;
+    height: 20px;
+    margin: 0px;
+    width: 100%;
+    border: 1px solid black;
+}
 
 
 
