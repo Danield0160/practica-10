@@ -50,27 +50,29 @@ html[data-scroll="1"] #header{
     flex-direction: row;
     
 }
-#navbar > div{
+.nav_opcion{
     display: inline-block;
     border: 1px solid black;
     flex: 1;
     text-align: center;
     margin: 7px 5px;
     box-shadow: 1px 1px 1px black;
-}
-#navbar .desplegable{
-    height: 0;
-}
-.oculto{
-    display: none;
-}
-#navbar .item{
     position: relative;
-    background-color: yellow;
-    height: 20px;
-    margin: 0px;
+}
+.multiple>ul{
+    position: absolute;
+    top: 0;
+    left: -1px;
+    background-color: green;
+    width: 60%;
+
+}
+.multiple li{
     width: 100%;
-    border: 1px solid black;
+
+}
+.oculto>ul{
+    display: none;
 }
 
 

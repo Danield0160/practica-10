@@ -43,6 +43,7 @@ function obtener_imagenes_carousel() {
     ]
 }
 
+//carousel
 function carousel() {
     let carousel_div = $("#carousel")
     let imagenes = obtener_imagenes_carousel()
@@ -68,7 +69,7 @@ function carousel() {
 
         await espera
         await new Promise(function (resolve) {
-            setTimeout(() => resolve(), 1000)
+            setTimeout(() => resolve(), 2200)
         })
 
         if (indice == imagenes.length - 1) {
@@ -84,5 +85,12 @@ function carousel() {
 }
 carousel()
 
-
-$(".multiple").on("")
+//desplegable
+var actual
+$(".multiple").hover(function (e) {
+    actual = e.target
+    $(actual).removeClass("oculto")
+},function (e) {
+    $(actual).addClass("oculto")
+    }
+)
