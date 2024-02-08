@@ -9,7 +9,6 @@ function animar_titulo() {
         letras.push(letra_div)
     }
 
-
     let tiempo_entre_oleaje = 2000
     let tiempo_de_la_ola = 200
     let tiempo_entre_olas = 100
@@ -74,7 +73,7 @@ function carousel() {
 
         if (indice == imagenes.length - 1) {
             for (let imagen of imagenes) {
-                imagen.css("left","0")
+                imagen.css("left", "0")
             }
             animacion(imagenes)
         } else {
@@ -83,5 +82,7 @@ function carousel() {
     }
     animacion(imagenes_div)
 }
-
 carousel()
+
+
+$(".multiple").on("")
