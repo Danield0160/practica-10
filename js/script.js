@@ -78,13 +78,9 @@ function carousel() {
             console.log(indice)
             if(indice<=0){
                 for (let imagen of imagenes_div) {
-                    imagen.animate({ left: (-45 * indice) + "vh" }, 10)
+                    imagen.animate({ left: (-45 * indice) + "vh" }, 1000,function(){imagen.css("left", (-45 * indice) + "vh")})
                 }
                 indice = imagenes_div.length-1
-
-                for (let imagen of imagenes_div) {
-                    imagen.css("left", (-45 * indice) + "vh")
-                }
                 return
             }else{
                 if(indice > imagenes_div.length-1){
