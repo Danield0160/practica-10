@@ -59,39 +59,99 @@ function carousel() {
     carousel_div.append(image)
     imagenes_div.push(image)
 
-    var indice_global 
-    async function animacion(imagenes, indice ,unico=false) {
-        if(indice){indice_global = indice}else{indice = indice_global}
 
-        await new Promise(function (resolve) {
-            for (let imagen of imagenes) {
-                imagen.animate({ left: (-45 * indice) + "vh" }, 1000, () => resolve())
-            }
-        })
-        if(unico){return}
-        await new Promise(function (resolve) {
-            setTimeout(() => resolve(), 2200)
-        })
 
-        if (indice_global > imagenes.length -2) {
-            for (let imagen of imagenes) {
-                imagen.css("left", "0")
+    var indice = 0
+    var temporizador_max = 300
+    var temporizador=0
+
+    let boton_menos = $(document.createElement("button")).on("click",function(){indice-=2;temporizador=temporizador_max}).text("menos")
+    let boton_mas = $(document.createElement("button")).on("click",function(){temporizador=temporizador_max}).text("mas")
+    $("#cuerpo").append(boton_menos).append(boton_mas)
+
+    setInterval(function(){
+        temporizador+=1
+        if(temporizador> temporizador_max){
+            
+            temporizador = 0
+            indice++
+            console.log(indice)
+            if(indice<=0){
+                for (let imagen of imagenes_div) {
+                    imagen.animate({ left: (-45 * indice) + "vh" }, 1000)
+                }
+                indice = imagenes_div.length-1
+
+                for (let imagen of imagenes_div) {
+                    imagen.css("left", (-45 * imagenes_div.length) + "vh")
+                }
+                return
+            }else{
+                if(indice > imagenes_div.length-1){
+                    indice = 1
+                    for (let imagen of imagenes_div) {
+                        imagen.css("left", "0")
+                    }
+                }
             }
-            animacion(imagenes,1)
-        } else {
-            animacion(imagenes, Number(indice_global) + 1)
+            for (let imagen of imagenes_div) {
+                imagen.animate({ left: (-45 * indice) + "vh" }, 1000)
+            }
         }
-    }
-    animacion(imagenes_div,1)
+    },10)
 
-    let container = $(document.createElement("div")).attr("id","carousel_controller")
-    for (let indice = 1; indice < imagenes_div.length; indice++) {        
-        let boton = $(document.createElement("button"))
-        boton.text(indice)
-        boton.on("click", function () { animacion(imagenes_div, indice,true) })
-        container.append(boton)
-    }
-    $("#cuerpo").append(container)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // var indice_global 
+    // async function animacion(imagenes, indice ,unico=false) {
+    //     if(indice){indice_global = indice}else{indice = indice_global}
+
+    //     await new Promise(function (resolve) {
+    //         for (let imagen of imagenes) {
+    //             imagen.animate({ left: (-45 * indice) + "vh" }, 1000, () => resolve())
+    //         }
+    //     })
+    //     if(unico){return}
+    //     await new Promise(function (resolve) {
+    //         setTimeout(() => resolve(), 2200)
+    //     })
+
+    //     if (indice_global > imagenes.length -2) {
+    //         for (let imagen of imagenes) {
+    //             imagen.css("left", "0")
+    //         }
+    //         animacion(imagenes,1)
+    //     } else {
+    //         animacion(imagenes, Number(indice_global) + 1)
+    //     }
+    // }
+    // animacion(imagenes_div,1)
+
+    // let container = $(document.createElement("div")).attr("id","carousel_controller")
+    // for (let indice = 1; indice < imagenes_div.length; indice++) {        
+    //     let boton = $(document.createElement("button"))
+    //     boton.text(indice)
+    //     boton.on("click", function () { animacion(imagenes_div, indice,true) })
+    //     container.append(boton)
+    // }
+    // $("#cuerpo").append(container)
 }
 carousel()
 
