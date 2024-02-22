@@ -111,12 +111,27 @@ $(".multiple").hover(function (e) {
 
 
 
-
+var datos = [
+    {
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Un1.svg/768px-Un1.svg.png",
+        product: "producto 1",
+        info1: "information primero 1",
+        info2: "information segundo 1"
+    },
+    {
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/2.svg/1200px-2.svg.png",
+        product: "producto 2",
+        info1: "information primero 2",
+        info2: "information segundo 2"
+    }
+]
 
 const { createApp, ref } = Vue
 createApp({
     data() {
         return {
+            datos: datos,
+            id: 0,
             img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Un1.svg/768px-Un1.svg.png",
             product: "producto",
             info1: "information1",
@@ -125,7 +140,7 @@ createApp({
     },
     methods: {
         change() {
-            this.info1 = "asdsad"
+            this.id = 1
         }
     },
 
@@ -135,7 +150,7 @@ createApp({
     <img :src=img width='50px'>
 </div>
 <div>
-    <h1>{{product}}</h1>
+    <h1>{{datos[0]['product']}}</h1>
     <p>{{info1}}</p>
     <p>{{info2}}</p>
 </div>
