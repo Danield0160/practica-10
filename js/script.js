@@ -63,27 +63,26 @@ function carousel() {
 
     var indice = 0
     var temporizador_max = 300
-    var temporizador=0
+    var temporizador = 0
 
-    let boton_menos = $(document.createElement("button")).on("click",function(){indice-=2;temporizador=temporizador_max}).text("menos")
-    let boton_mas = $(document.createElement("button")).on("click",function(){temporizador=temporizador_max}).text("mas")
+    let boton_menos = $(document.createElement("button")).on("click", function () { indice -= 2; temporizador = temporizador_max }).text("menos")
+    let boton_mas = $(document.createElement("button")).on("click", function () { temporizador = temporizador_max }).text("mas")
     $("#cuerpo").append(boton_menos).append(boton_mas)
 
-    setInterval(function(){
-        temporizador+=1
-        if(temporizador> temporizador_max){
-            
+    setInterval(function () {
+        temporizador += 1
+        if (temporizador > temporizador_max) {
+
             temporizador = 0
             indice++
-            console.log(indice)
-            if(indice<=0){
+            if (indice <= 0) {
                 for (let imagen of imagenes_div) {
-                    imagen.animate({ left: (-45 * indice) + "vh" }, 1000,function(){imagen.css("left", (-45 * indice) + "vh")})
+                    imagen.animate({ left: (-45 * indice) + "vh" }, 1000, function () { imagen.css("left", (-45 * indice) + "vh") })
                 }
-                indice = imagenes_div.length-1
+                indice = imagenes_div.length - 1
                 return
-            }else{
-                if(indice > imagenes_div.length-1){
+            } else {
+                if (indice > imagenes_div.length - 1) {
                     indice = 1
                     for (let imagen of imagenes_div) {
                         imagen.css("left", "0")
@@ -94,60 +93,8 @@ function carousel() {
                 imagen.animate({ left: (-45 * indice) + "vh" }, 1000)
             }
         }
-    },10)
+    }, 10)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // var indice_global 
-    // async function animacion(imagenes, indice ,unico=false) {
-    //     if(indice){indice_global = indice}else{indice = indice_global}
-
-    //     await new Promise(function (resolve) {
-    //         for (let imagen of imagenes) {
-    //             imagen.animate({ left: (-45 * indice) + "vh" }, 1000, () => resolve())
-    //         }
-    //     })
-    //     if(unico){return}
-    //     await new Promise(function (resolve) {
-    //         setTimeout(() => resolve(), 2200)
-    //     })
-
-    //     if (indice_global > imagenes.length -2) {
-    //         for (let imagen of imagenes) {
-    //             imagen.css("left", "0")
-    //         }
-    //         animacion(imagenes,1)
-    //     } else {
-    //         animacion(imagenes, Number(indice_global) + 1)
-    //     }
-    // }
-    // animacion(imagenes_div,1)
-
-    // let container = $(document.createElement("div")).attr("id","carousel_controller")
-    // for (let indice = 1; indice < imagenes_div.length; indice++) {        
-    //     let boton = $(document.createElement("button"))
-    //     boton.text(indice)
-    //     boton.on("click", function () { animacion(imagenes_div, indice,true) })
-    //     container.append(boton)
-    // }
-    // $("#cuerpo").append(container)
 }
 carousel()
 
@@ -160,3 +107,40 @@ $(".multiple").hover(function (e) {
     $(actual).addClass("oculto")
 }
 )
+
+
+
+
+
+
+const { createApp, ref } = Vue
+createApp({
+    data() {
+        return {
+            img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Un1.svg/768px-Un1.svg.png",
+            product: "producto",
+            info1: "information1",
+            info2: "information2"
+        }
+    },
+    methods: {
+        change() {
+            this.info1 = "asdsad"
+        }
+    },
+
+
+    template: `
+<div class='izq'>
+    <img :src=img width='50px'>
+</div>
+<div>
+    <h1>{{product}}</h1>
+    <p>{{info1}}</p>
+    <p>{{info2}}</p>
+</div>
+
+<button @click='change()'>asd</button>
+
+`
+}).mount("#app")
