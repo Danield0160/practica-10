@@ -20,7 +20,7 @@ CREATE table usuarios (
 insert into
     productos ()
 VALUES (
-        5, "mesa", 150.2, 10, "https://static.islas.ikea.es/assets/images/590/0859014_PE624334_S4.webp", "una buena mesa de roble macizo"
+        5, "mesa", 150.2, 0, "https://static.islas.ikea.es/assets/images/590/0859014_PE624334_S4.webp", "una buena mesa de roble macizo"
     ),
     (
         1, "silla", 80, 50, "https://static.islas.ikea.es/assets/images/848/0484875_PE621342_S4.webp", "una buena silla de mazos de robles"

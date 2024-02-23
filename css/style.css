@@ -83,6 +83,16 @@ html[data-scroll="1"] #header{
     display: none;
 }
 
+.agotado{
+    color: red;
+}
+.bien{
+    background-color: green;
+}
+.mal{
+    background-color: red;
+}
+
 
 
 #cuerpo{

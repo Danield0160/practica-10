@@ -9,7 +9,7 @@ Diseña un sitio web para la tienda online que se te ha asignado que cumpla con 
 2) DIVISIÓN DE MENÚ con un LOGO que debe ofrecer las siguientes opciones: (0,5p)
 <!-- 2.1) Inicio: Un enlace que recarga la web inicial. -->
 2.2) Productos: Muestra en la División Principal una lista de al menos cinco productos (menú desplegable)
-2.3) Acerca de: Muestra información en la División Principal sobre la Compañía.
+<!-- 2.3) Acerca de: Muestra información en la División Principal sobre la Compañía. -->
 2.4) Registrarse/Iniciar sesión: Nos permite iniciar sesión en la web o registrarnos.
 2.5) Carrito: Muestra el contenido de nuestro carrito de compras en la División Principal y confirma o cancela el
 pedido.
@@ -45,10 +45,10 @@ El servidor puede ser cualquiera de tu elección usando PHP y MySQL y debe inclu
 <!-- 8.3) Conexiones Ajax (0,5) -->
 
 9) USAR Vue para al menos una de las siguientes: (2p)
-9.1) Componente usando Plantillas (Ver ejemplo en codepen 8) (0,25)
+<!-- 9.1) Componente usando Plantillas (Ver ejemplo en codepen 8) (0,25) -->
 9.2) Directivas (condicional, bucles, vinculación de datos, eventos, vinculación de datos bidireccional) (1p)
 9.3) Propiedades calculadas (0,25)
 9.4) Eventos con métodos (0,25)
-9.5) CSS dinámico. (0,25)
+<!-- 9.5) CSS dinámico. (0,25) -->
 
 10) El código está bien comentado, indentado y optimizado y experiencia de usuario. (1p)

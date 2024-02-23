@@ -174,6 +174,10 @@ let componente_productos = createApp({
         },
         desactivar() {
             this.activo = false
+        },
+        esta_agotado() {
+            console.log(this.disponibilidad)
+            return (this.disponibilidad == 0)
         }
 
     },
@@ -188,7 +192,7 @@ let componente_productos = createApp({
         <h1>{{nombre}}</h1>
         <p>{{descripcion}}</p>
         <p>{{precio + "€"}}</p>
-        <p>{{disponibilidad}}</p>
+        <p v-bind:class='{agotado: esta_agotado()}'>{{disponibilidad}}</p>
     </div>
 
 </div>
@@ -209,11 +213,26 @@ $.ajax({
 
 
 //TODO: Login
+var regex = {
+    nombre_form: /^[A-Z][a-z]+$/,
+    fecha_form: /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/,
+    genero_form: /^((Hombre)|(Mujer))$/,
+    dni_form: /^[0-9]{8}[A-Z]$/,
+    pass_form: /.{6,}/,
+}
+function test(id) {
+    let input = $("#" + id)
+    let resultado = regex[id].test(input.val())
+    resultado ? input.attr("class", "bien") : input.attr("class", "mal")
+
+}
 let componente_login = createApp({
     data() {
         $("#login_button").on("click", () => this.activar())
+
+
         return {
-            activo: false,
+            activo: true,
         }
     },
     methods: {
@@ -225,32 +244,37 @@ let componente_login = createApp({
         },
         desactivar() {
             this.activo = false
+        },
+        envio(event) {
+            event.preventDefault()
+            //TODO: con esto seleccionar el formulario si es de login o register
         }
     },
 
-
+    //TODO: doble formulario, uno para login y otro para register
     template: `
 <div v-if='activo'>
     <h1>Login</h1>
     <form>
     <label>Nombre</label>
-    <input>
+    <input id='nombre_form' oninput="test(this.id)">
     <label>fecha de nacimiento</label>
-    <input>
+    <input id='fecha_form' oninput="test(this.id)">
     <label>Genero</label>
-    <input>
+    <input id='genero_form' oninput="test(this.id)">
     <label>dni</label>
-    <input>
+    <input id='dni_form' oninput="test(this.id)">
     <label>contraseña</label>
-    <input>
+    <input id='pass_form' oninput="test(this.id)">
 
-    <button>enviar</button>
+    <button @click='envio($event)'>enviar</button>
     </form>
 
 </div>
 `
 })
 let login_app_object = componente_login.mount("#app_login")
+
 
 
 //TODO: sobre nosotros
@@ -270,7 +294,6 @@ let componente_about = createApp({
             this.activo = true
         },
         desactivar() {
-            console.log("about des")
             this.activo = false
         }
 
@@ -280,6 +303,12 @@ let componente_about = createApp({
     template: `
 <div v-if='activo'>
     <h1>sobre nosostros</h1>
+    <p>Somos una compañia de venta de muebles de muy alta calidad</p>
+    <p>Correo de contacto: ŸQËÄ.müëblës@gmail.com</p>
+    <p>Telefono: 666 666 666</p>
+    <p>Direccion: Calle falsa 123</p>
+    <p>Icons made from <a href="https://www.onlinewebfonts.com/icon">svg icons</a> is licensed by CC BY 4.0</p>
+    
 </div>
 `
 })
