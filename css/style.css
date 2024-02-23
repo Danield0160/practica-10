@@ -92,12 +92,25 @@ html[data-scroll="1"] #header{
 .mal{
     background-color: red;
 }
+.container{
+    display: block;
+}
+.container > div{
+    width: 45%;
+    display: inline-block;
+    vertical-align: top;
+}
+.container > div>img{
+    width: 100%;
+
+}
+
 
 
 
 #cuerpo{
     background-color: blue;
-    height: 150vh;
+    height: 100vh;
 }
 #carousel{
     margin: auto;

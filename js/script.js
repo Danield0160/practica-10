@@ -184,11 +184,11 @@ let componente_productos = createApp({
 
 
     template: `
-<div v-if='activo'>
+<div class='container' v-if='activo'>
     <div class='izq'>
-        <img :src=imagen width='50px'>
+        <img :src=imagen >
     </div>
-    <div>
+    <div class='info'>
         <h1>{{nombre}}</h1>
         <p>{{descripcion}}</p>
         <p>{{precio + "€"}}</p>
@@ -253,7 +253,7 @@ let componente_login = createApp({
 
     //TODO: doble formulario, uno para login y otro para register
     template: `
-<div v-if='activo'>
+<div class='izq' v-if='activo'>
     <h1>Login</h1>
     <form>
     <label>Nombre</label>
