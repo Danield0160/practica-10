@@ -35,12 +35,18 @@ document.addEventListener('scroll', () => { document.documentElement.dataset.scr
 
 
 function obtener_imagenes_carousel() {
-    return ["https://static.islas.ikea.es/assets/images/590/0859014_PE624334_S4.webp",
-        "https://static.islas.ikea.es/assets/images/848/0484875_PE621342_S4.webp",
-        "https://www.ikea-club.org/cache/zoo_images/2/2b8a4cb398df2c67c1253afc63b0caa2.jpg",
-        "https://www.ikea.com/images/23/96/23966f1e8220f77d8526c64eae36c4af.jpeg?f=s",
-        "https://www.ikea.com/es/es/images/products/hemnes-mueble-salon-marron-claro__0805270_pe769480_s5.jpg"
-    ]
+    let lista = []
+    for (let producto of datos_ajax_productos) {
+        lista.push(producto["imagen"])
+    }
+
+    return lista
+    // return ["https://static.islas.ikea.es/assets/images/590/0859014_PE624334_S4.webp",
+    //     "https://static.islas.ikea.es/assets/images/848/0484875_PE621342_S4.webp",
+    //     "https://www.ikea-club.org/cache/zoo_images/2/2b8a4cb398df2c67c1253afc63b0caa2.jpg",
+    //     "https://www.ikea.com/images/23/96/23966f1e8220f77d8526c64eae36c4af.jpeg?f=s",
+    //     "https://www.ikea.com/es/es/images/products/hemnes-mueble-salon-marron-claro__0805270_pe769480_s5.jpg"
+    // ]
 }
 
 //carousel
@@ -48,11 +54,14 @@ function carousel() {
     let carousel_div = $("#carousel")
     let imagenes = obtener_imagenes_carousel()
     let imagenes_div = []
+    let i = 0;
     for (let imagen of imagenes) {
         let image = $(document.createElement("img"))
         image.attr("src", imagen)
         carousel_div.append(image)
-        imagenes_div.push(image)
+        imagenes_div.push(image);
+        ((i) => { image.on("click", function () { vm.change(i) }) })(i);
+        i++
     }
     let image = $(document.createElement("img"))
     image.attr("src", imagenes[0])
@@ -96,8 +105,6 @@ function carousel() {
     }, 10)
 
 }
-carousel()
-
 //desplegable
 var actual
 $(".multiple").hover(function (e) {
@@ -107,55 +114,85 @@ $(".multiple").hover(function (e) {
     $(actual).addClass("oculto")
 }
 )
-
-
-
-
-var datos = [
-    {
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Un1.svg/768px-Un1.svg.png",
-        product: "producto 1",
-        info1: "information primero 1",
-        info2: "information segundo 1"
-    },
-    {
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/2.svg/1200px-2.svg.png",
-        product: "producto 2",
-        info1: "information primero 2",
-        info2: "information segundo 2"
+function montar_menu_productos() {
+    let bloque = document.createElement("ul")
+    let i = 0;
+    for (let producto of datos_ajax_productos) {
+        let elemento = document.createElement("li")
+        elemento.innerText = producto.nombre;
+        ((i) => { elemento.onclick = function () { vm.change(i) } })(i);
+        bloque.appendChild(elemento)
+        i++
     }
-]
+    menu_producto.appendChild(bloque)
+}
 
+
+
+
+
+
+
+
+var datos_ajax_productos;
 const { createApp, ref } = Vue
-createApp({
+let componente_productos = createApp({
     data() {
         return {
-            datos: datos,
+            datos: datos_ajax_productos,
             id: 0,
-            img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Un1.svg/768px-Un1.svg.png",
-            product: "producto",
-            info1: "information1",
-            info2: "information2"
+            nombre: datos_ajax_productos[0]["nombre"],
+            descripcion: datos_ajax_productos[0]["descripcion"],
+            precio: datos_ajax_productos[0]["precio"],
+            disponibilidad: datos_ajax_productos[0]["disponibilidad"],
+            imagen: datos_ajax_productos[0]["imagen"]
         }
     },
     methods: {
-        change() {
-            this.id = 1
-        }
+        change(id = 1) {
+            console.log(id)
+            this.id = id
+            this.nombre = this.datos[this.id]["nombre"]
+            this.descripcion = this.datos[this.id]["descripcion"]
+            this.precio = this.datos[this.id]["precio"]
+            this.disponibilidad = this.datos[this.id]["disponibilidad"]
+            this.imagen = this.datos[this.id]["imagen"]
+
+        },
+        mounted() {
+            console.log(2)
+        },
+
     },
 
 
     template: `
 <div class='izq'>
-    <img :src=img width='50px'>
+    <img :src=imagen width='50px'>
 </div>
 <div>
-    <h1>{{datos[0]['product']}}</h1>
-    <p>{{info1}}</p>
-    <p>{{info2}}</p>
+    <h1>{{nombre}}</h1>
+    <p>{{descripcion}}</p>
+    <p>{{precio + "€"}}</p>
+    <p>{{disponibilidad}}</p>
 </div>
 
-<button @click='change()'>asd</button>
+<button @click='change(3)'>asd</button>
 
 `
-}).mount("#app")
+})
+var vm
+//Cuando se carge las imagenes iniciara el carousel y la parte de productos
+$.ajax({
+    url: "http://localhost/bbdd.php",
+    success: function (result) {
+        let resultado = JSON.parse(result)
+        datos_ajax_productos = resultado
+        vm = componente_productos.mount("#app")
+        carousel()
+        montar_menu_productos()
+
+    }
+});
+
+//TODO: mediante promesa hacer que primero coja los productos y luego haga el resto de la pagina
