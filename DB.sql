@@ -1,4 +1,4 @@
--- Active: 1708622702748@@127.0.0.1@3306@practica_10_drm
+-- Active: 1708422337845@@127.0.0.1@3306@practica_10_DRM
 Drop DATABASE if EXISTS practica_10_DRM;
 
 create DATABASE practica_10_DRM;
@@ -38,5 +38,5 @@ VALUES (
 insert into
     usuarios ()
 values (
-        1, "admin", "05/03/2001", "admin", "hombre", "78588395V"
+        1, "admin", "2001/03/05", "admin", "hombre", "78588395V"
     )

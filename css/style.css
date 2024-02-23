@@ -109,7 +109,9 @@ html[data-scroll="1"] #header{
 }
 
 
-
+form input{
+    display: block;
+}
 
 
 
@@ -121,9 +123,9 @@ html[data-scroll="1"] #header{
 }
 #footer{
     position: sticky;
-    bottom: -7vh;
+    bottom: -8.7vh;
     background-color: green;
-    height: 10vh;
+    min-height: 10vh;
     transition: all .1s linear;
 }
 #footer:hover{

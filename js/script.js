@@ -34,6 +34,9 @@ animar_titulo()
 document.addEventListener('scroll', () => { document.documentElement.dataset.scroll = Number(window.scrollY > 50); });
 
 
+
+
+
 function obtener_imagenes_carousel() {
     let lista = []
     for (let producto of datos_ajax_productos) {
@@ -60,7 +63,7 @@ function carousel() {
         image.attr("src", imagen)
         carousel_div.append(image)
         imagenes_div.push(image);
-        ((i) => { image.on("click", function () { vm.change(i) }) })(i);
+        ((i) => { image.on("click", function () { producto_app_object.change(i) }) })(i);
         i++
     }
     let image = $(document.createElement("img"))
@@ -74,9 +77,9 @@ function carousel() {
     var temporizador_max = 300
     var temporizador = 0
 
-    let boton_menos = $(document.createElement("button")).on("click", function () { indice -= 2; temporizador = temporizador_max }).text("menos")
-    let boton_mas = $(document.createElement("button")).on("click", function () { temporizador = temporizador_max }).text("mas")
-    $("#cuerpo").append(boton_menos).append(boton_mas)
+    // let boton_menos = $(document.createElement("button")).on("click", function () { indice -= 2; temporizador = temporizador_max }).text("menos")
+    // let boton_mas = $(document.createElement("button")).on("click", function () { temporizador = temporizador_max }).text("mas")
+    // $("#cuerpo").append(boton_menos).append(boton_mas)
 
     setInterval(function () {
         temporizador += 1
@@ -120,7 +123,7 @@ function montar_menu_productos() {
     for (let producto of datos_ajax_productos) {
         let elemento = document.createElement("li")
         elemento.innerText = producto.nombre;
-        ((i) => { elemento.onclick = function () { vm.change(i) } })(i);
+        ((i) => { elemento.onclick = function () { producto_app_object.change(i) } })(i);
         bloque.appendChild(elemento)
         i++
     }
@@ -141,6 +144,8 @@ let componente_productos = createApp({
         return {
             datos: datos_ajax_productos,
             id: 0,
+            activo: false,
+
             nombre: datos_ajax_productos[0]["nombre"],
             descripcion: datos_ajax_productos[0]["descripcion"],
             precio: datos_ajax_productos[0]["precio"],
@@ -150,8 +155,8 @@ let componente_productos = createApp({
     },
     methods: {
         change(id = 1) {
-            console.log(id)
             this.id = id
+            this.activar()
             this.nombre = this.datos[this.id]["nombre"]
             this.descripcion = this.datos[this.id]["descripcion"]
             this.precio = this.datos[this.id]["precio"]
@@ -162,37 +167,136 @@ let componente_productos = createApp({
         mounted() {
             console.log(2)
         },
+        activar() {
+            desactivar_global()
+            this.activo = true
+
+        },
+        desactivar() {
+            this.activo = false
+        }
 
     },
 
 
     template: `
-<div class='izq'>
-    <img :src=imagen width='50px'>
-</div>
-<div>
-    <h1>{{nombre}}</h1>
-    <p>{{descripcion}}</p>
-    <p>{{precio + "€"}}</p>
-    <p>{{disponibilidad}}</p>
-</div>
+<div v-if='activo'>
+    <div class='izq'>
+        <img :src=imagen width='50px'>
+    </div>
+    <div>
+        <h1>{{nombre}}</h1>
+        <p>{{descripcion}}</p>
+        <p>{{precio + "€"}}</p>
+        <p>{{disponibilidad}}</p>
+    </div>
 
-<button @click='change(3)'>asd</button>
-
+</div>
 `
 })
-var vm
+var producto_app_object
 //Cuando se carge las imagenes iniciara el carousel y la parte de productos
 $.ajax({
-    url: "http://localhost/bbdd.php",
+    url: "http://localhost/p10/bbdd.php",
     success: function (result) {
         let resultado = JSON.parse(result)
         datos_ajax_productos = resultado
-        vm = componente_productos.mount("#app")
+        producto_app_object = componente_productos.mount("#app_producto")
         carousel()
         montar_menu_productos()
-
     }
 });
 
-//TODO: mediante promesa hacer que primero coja los productos y luego haga el resto de la pagina
+
+//TODO: Login
+let componente_login = createApp({
+    data() {
+        $("#login_button").on("click", () => this.activar())
+        return {
+            activo: false,
+        }
+    },
+    methods: {
+        change() {
+        },
+        activar() {
+            desactivar_global()
+            this.activo = true
+        },
+        desactivar() {
+            this.activo = false
+        }
+    },
+
+
+    template: `
+<div v-if='activo'>
+    <h1>Login</h1>
+    <form>
+    <label>Nombre</label>
+    <input>
+    <label>fecha de nacimiento</label>
+    <input>
+    <label>Genero</label>
+    <input>
+    <label>dni</label>
+    <input>
+    <label>contraseña</label>
+    <input>
+
+    <button>enviar</button>
+    </form>
+
+</div>
+`
+})
+let login_app_object = componente_login.mount("#app_login")
+
+
+//TODO: sobre nosotros
+let componente_about = createApp({
+    data() {
+        $("#about_button").on("click", () => this.activar())
+
+        return {
+            activo: false,
+        }
+    },
+    methods: {
+        change() {
+        },
+        activar() {
+            desactivar_global()
+            this.activo = true
+        },
+        desactivar() {
+            console.log("about des")
+            this.activo = false
+        }
+
+    },
+
+
+    template: `
+<div v-if='activo'>
+    <h1>sobre nosostros</h1>
+</div>
+`
+})
+let about_app_object = componente_about.mount("#app_about")
+
+
+
+
+
+
+
+
+
+
+
+function desactivar_global() {
+    producto_app_object.desactivar()
+    login_app_object.desactivar()
+    about_app_object.desactivar()
+}
