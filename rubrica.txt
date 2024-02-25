@@ -1,4 +1,10 @@
-<!-- TODO: poner bien los productos en BD -->
+<!-- 
+    
+    
+    TODO:poner bien los nombre e imagenes de la bd
+
+
+-->
 Diseña un sitio web para la tienda online que se te ha asignado que cumpla con los siguientes requisitos:
 <!-- 1) Estructura de página HTML: (0,5p) -->
 <!-- Debe tener al menos cuatro divisiones, con las siguientes funciones: -->
@@ -7,14 +13,14 @@ Diseña un sitio web para la tienda online que se te ha asignado que cumpla con 
 <!-- 1.3) División principal para la visualización de información detallada. -->
 <!-- 1.4) División de otra información. -->
 
-2) DIVISIÓN DE MENÚ con un LOGO que debe ofrecer las siguientes opciones: (0,5p)
+<!-- 2) DIVISIÓN DE MENÚ con un LOGO que debe ofrecer las siguientes opciones: (0,5p) -->
 <!-- 2.1) Inicio: Un enlace que recarga la web inicial. -->
 <!-- 2.2) Productos: Muestra en la División Principal una lista de al menos cinco productos (menú desplegable) -->
 <!-- 2.3) Acerca de: Muestra información en la División Principal sobre la Compañía. -->
 <!-- 2.4) Registrarse/Iniciar sesión: Nos permite iniciar sesión en la web o registrarnos. -->
 <!-- 2.5) Carrito: Muestra el contenido de nuestro carrito de compras en la División Principal y confirma o cancela el
 pedido. -->
-2.6) Idioma: Permite cambiar los idiomas de español a inglés (o más).
+<!-- 2.6) Idioma: Permite cambiar los idiomas de español a inglés (o más). -->
 
 <!-- 3) DIVISIÓN DE PRODUCTOS: (0,5p) -->
 <!-- 3.1) Al menos cinco productos se deslizan automáticamente cada ciertos segundos. -->

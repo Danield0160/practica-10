@@ -20,15 +20,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' &&  $_GET['modo']== "productos") {
     }
     
     $sql = 'SELECT * FROM productos;';
-    $result = $conn->query($sql);
+    $result_prod = $conn->query($sql);
+
+    $sql = 'SELECT * FROM productos_info;';
+    $result_info = $conn->query($sql);
     
-    if ($result->num_rows > 0) {
+    if ($result_prod->num_rows > 0) {
       // output data of each row
-        $resultado = [];
-        while($row = $result->fetch_assoc()) {
-            $resultado[] = $row;
+        $resultado_prod = [];
+        while($row = $result_prod->fetch_assoc()) {
+            $resultado_prod[] = $row;
         }
-        echo json_encode($resultado);
+
+        $resultado_info = [];
+        while($row = $result_info->fetch_assoc()) {
+            $resultado_info[] = $row;
+        }
+
+        echo json_encode(array("productos"=>$resultado_prod,"info"=>$resultado_info));
     } else {
         echo json_encode([]);
     }

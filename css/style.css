@@ -2,10 +2,12 @@
     font-family: "IkeaFont" ;
     src: url(../font/IKEASans-Bold.ttf);
 }
-*{border: 1px solid green; box-sizing: border-box;}
+/* *{border: 1px solid green; box-sizing: border-box;} */
 body{
     margin: 0;
     overflow-x: hidden;
+    background-color: lightblue;
+    min-height: 100vh;
 }
 #navbar a{
     display: block;
@@ -65,19 +67,19 @@ html[data-scroll="1"] #header{
 .multiple>ul{
     position: absolute;
     top: 0;
-    background-color: green;
-    width: 100%;
+    background-color: red;
+    width: 99%;
     border: 2px solid black;
     border-top: 0;
     padding: 0;
-
 }
 .multiple li{
-    margin: 2px;
-    width: 100%;
+    margin: 1px;
+    width: 99%;
     list-style-type: none;
     text-align: left;
-    background-color: aqua;
+    background-color: yellow;
+    text-align: center;
 }
 .oculto>ul{
     display: none;
@@ -110,6 +112,27 @@ html[data-scroll="1"] #header{
 }
 
 
+#app_producto{
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    width: fit-content;
+    background-color: white;
+}
+#app_producto img{
+    height: 250px;
+}
+#app_producto .info{
+    margin-left: 10px;
+}
+
+
+
+#app_about{
+    background-color: white;
+    text-align: center;
+}
 
 
 
@@ -119,6 +142,7 @@ html[data-scroll="1"] #header{
 }
 #carousel{
     margin: auto;
+    margin-top: 10px;
     display: flex;
     height: 45vh;
     width: 45vh;
@@ -137,10 +161,20 @@ html[data-scroll="1"] #header{
 }
 
 
+
+form{
+    background-color: white;
+    margin-bottom: 10px;
+
+}
 form input{
     display: block;
+    width: 95%;
+    margin: auto;
 }
-
+form button{
+    width: 100%;
+}
 #cuenta_usuario{
     position: fixed;
     top: -0;
@@ -150,6 +184,40 @@ form input{
 }
 
 
+#app_carrito{
+    margin-bottom: 20px;
+}
+#app_carrito h1{
+    text-align: center;
+}
+#app_carrito p{
+    text-align: center;
+}
+.producto_carrito{
+    width: 30vh;
+    margin: auto;
+    background-color: white;
+    margin-bottom: 5px;
+    border: 1px solid black;
+    text-align: center;
+}
+.producto_carrito button{
+    width: 100%;
+}
+.producto_carrito input{
+    width: 50px;
+}
+.producto_carrito img{
+    width: 100%;
+}
+#precio_total{
+    text-align: center;
+    font-weight: bold;
+}
+#botones{
+    text-align: center;
+}
+
 #decorador{
     background-color: violet;
     height: 1.8vh;
@@ -157,9 +225,9 @@ form input{
 }
 #footer{
     position: sticky;
-    bottom: -8.7vh;
+    bottom: -9vh;
     background-color: green;
-    min-height: 10vh;
+    min-height: 12vh;
     transition: all .1s linear;
 }
 #footer:hover{

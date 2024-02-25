@@ -4,40 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>P10</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
-<body>
+<body id="pagina">
 
-    <div id="header">ŸQËÄ</div>
+    <div id="header">{{lt.titulo}}</div>
     <div id="cuenta_usuario"></div>
 
 
     <div id="navbar">
-        <div class="nav_opcion"><a href=""> Home</a></div>
+        <div class="nav_opcion"><a href=""> {{lt.inicio}}</a></div>
         <div class="multiple nav_opcion oculto" id="menu_producto">
-            Products
+            {{lt.productos}}
+        <ul></ul>
         </div>
-        <div class="nav_opcion" id="about_button">About</div>
-        <div class="nav_opcion" id="login_button">Register/Login</div>
-        <div class="nav_opcion" id="carrito_button">Cart</div>
+        <div class="nav_opcion" id="about_button">{{lt.nosotros}}</div>
+        <div class="nav_opcion" id="login_button">{{lt.registro_log}}</div>
+        <div class="nav_opcion" id="carrito_button">{{lt.carrito}}</div>
         <div class="multiple nav_opcion oculto">
-            Lenguage
+            {{lt.idioma}}
             <ul>
-                <li>asd</li>
-                <li>asd</li>
-                <li>asd</li>
+                <li id="boton_ES">{{lt.es}}</li>
+                <li id="boton_EN">{{lt.en}}</li>
             </ul>
         </div>
     </div>
 
+    <div id="carousel"></div>
 
     <div id="cuerpo">
-        <div id="carousel"></div>
         <div id="app_producto"></div>
         <div id="app_login"></div>
         <div id="app_about"></div>
@@ -46,11 +46,10 @@
 
 
     <div id="footer">
-        <div id="decorador">Mas información</div>
-        <p>Correo de contacto: daniel.rosles@gmail.com</p>
-        <p>Telefono: 666 666 666</p>
-        <p>Direccion: Calle falsa 123</p>
-        <p>Icons made from <a href="https://www.onlinewebfonts.com/icon">svg icons</a> is licensed by CC BY 4.0</p>
+        <div id="decorador">{{lt.informacion}}</div>
+        <p>{{lt.correo}}: daniel.rosles@gmail.com</p>
+        <p>{{lt.telefono}}: 666 666 666</p>
+        <p>{{lt.direccion}}: Calle falsa 123</p>
     </div>
 
     <script src="js/script.js"></script>
