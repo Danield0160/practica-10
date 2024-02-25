@@ -1,4 +1,4 @@
--- Active: 1708422337845@@127.0.0.1@3306@practica_10_DRM
+-- Active: 1708622702748@@127.0.0.1@3306@practica_10_drm
 Drop DATABASE if EXISTS practica_10_DRM;
 
 create DATABASE practica_10_DRM;
@@ -10,11 +10,22 @@ create DATABASE practica_10_DRM;
 use practica_10_DRM;
 
 create table productos (
-    id int PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(30), precio DECIMAL(6, 2), disponibilidad INT, imagen VARCHAR(100), descripcion varchar(100)
+    id int PRIMARY KEY AUTO_INCREMENT, 
+    nombre VARCHAR(30), 
+    precio DECIMAL(6, 2), 
+    disponibilidad INT, 
+    imagen VARCHAR(100), 
+    descripcion varchar(100)
 );
 
 CREATE table usuarios (
-    id int PRIMARY key, nombre VARCHAR(30), fecha_nacimiento DATE, passw VARCHAR(30), genero VARCHAR(20), dni VARCHAR(10)
+    id int PRIMARY key AUTO_INCREMENT, 
+    nombre VARCHAR(30), 
+    fecha_nacimiento DATE, 
+    passw VARCHAR(30), 
+    correo VARCHAR(20) UNIQUE, 
+    banco VARCHAR(10),
+    telefono VARCHAR(9)
 );
 
 insert into
@@ -38,5 +49,5 @@ VALUES (
 insert into
     usuarios ()
 values (
-        1, "admin", "2001/03/05", "admin", "hombre", "78588395V"
+        1, "admin", "2001/03/05", "admin", "admin@admin.com", "1234567891234567891234","123456789"
     )

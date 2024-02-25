@@ -178,6 +178,12 @@ let componente_productos = createApp({
         esta_agotado() {
             console.log(this.disponibilidad)
             return (this.disponibilidad == 0)
+        },
+        add(){
+            carrito_app_object.add(this.id, this.nombre, this.precio)
+        },
+        actualizar(){
+            this.datos = datos_ajax_productos
         }
 
     },
@@ -193,6 +199,7 @@ let componente_productos = createApp({
         <p>{{descripcion}}</p>
         <p>{{precio + "€"}}</p>
         <p v-bind:class='{agotado: esta_agotado()}'>{{disponibilidad}}</p>
+        <button v-if='disponibilidad!=0' @click='add()'>añadir al carrito</button>
     </div>
 
 </div>
@@ -200,28 +207,36 @@ let componente_productos = createApp({
 })
 var producto_app_object
 //Cuando se carge las imagenes iniciara el carousel y la parte de productos
-$.ajax({
-    url: "http://localhost/p10/bbdd.php",
-    success: function (result) {
-        let resultado = JSON.parse(result)
-        datos_ajax_productos = resultado
-        producto_app_object = componente_productos.mount("#app_producto")
-        carousel()
-        montar_menu_productos()
-    }
-});
-
-
-//TODO: Login
-var regex = {
-    nombre_form: /^[A-Z][a-z]+$/,
-    fecha_form: /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/,
-    genero_form: /^((Hombre)|(Mujer))$/,
-    dni_form: /^[0-9]{8}[A-Z]$/,
-    pass_form: /.{6,}/,
+function cargar_datos_productos(primera=false){
+    console.log("cargnado datos de productos")
+    $.ajax({
+        url: "http://localhost/bbdd.php?modo=productos",
+        cache:false,
+        success: function (result) {
+            let resultado = JSON.parse(result)
+            datos_ajax_productos = resultado
+            console.log(datos_ajax_productos)
+            if(primera){
+                producto_app_object = componente_productos.mount("#app_producto")
+                carousel()
+                montar_menu_productos()
+            }
+            producto_app_object.actualizar()
+        }
+    });
 }
-function test(id) {
-    let input = $("#" + id)
+cargar_datos_productos(true)
+
+var regex = {
+    nombre: /^[A-Z][a-z]+$/,
+    fecha: /^\d{4}\/\d{1,2}\/\d{1,2}$/,
+    correo: /^[A-z.1-9]+@[A-z.1-9]+\.[A-z]{1,3}$/,
+    banco: /^ES\d{22}$/,
+    telefono: /^[89]\d{8}$/,
+    passw: /(?=.*[0-9])(?=.*[A-z])(?=.*[!-\/:-@\[-_\{-~]).{12,}/
+}
+function test(elemento, id) {
+    let input = $(elemento)
     let resultado = regex[id].test(input.val())
     resultado ? input.attr("class", "bien") : input.attr("class", "mal")
 
@@ -229,10 +244,10 @@ function test(id) {
 let componente_login = createApp({
     data() {
         $("#login_button").on("click", () => this.activar())
-
-
         return {
-            activo: true,
+            logueado: false,
+            activo: false,
+            correo: ""
         }
     },
     methods: {
@@ -245,30 +260,90 @@ let componente_login = createApp({
         desactivar() {
             this.activo = false
         },
-        envio(event) {
+        envio(event, modo) {
             event.preventDefault()
-            //TODO: con esto seleccionar el formulario si es de login o register
+            let form = event.target.parentElement
+            let inputs = form.querySelectorAll("input")
+            let datos = { modo: modo }
+            let completo = true
+            inputs.forEach(function (value, index, array) {
+                if (!value.classList.contains("bien")) {
+                    completo = false
+                }
+                datos[value.name] = value.value
+            })
+            if (completo) {
+                let temp = this
+                $.post("http://localhost/bbdd.php", datos, function (data, status) {
+                    console.log(data,status)
+                    if (data == true) {
+                        inputs.forEach(function (value, index, array) {
+                            value.value = ""
+                        })
+                        temp.correo = datos.correo
+                        temp.logueado = true
+                        $("#cuenta_usuario").text(datos.correo)
+                    } else {
+                        if(modo == "registro"){
+                            alert("Error,email ya existente")
+                        }else if(modo == "login"){
+                            alert("Error en la contraseña o email")
+                        }
+                    }
+                });
+            }
+
+        },
+        deloguear(event){
+            event.preventDefault()
+            $("#cuenta_usuario").text("")
+            this.logueado = false
+            this.correo = ""
         }
     },
 
-    //TODO: doble formulario, uno para login y otro para register
     template: `
-<div class='izq' v-if='activo'>
-    <h1>Login</h1>
-    <form>
-    <label>Nombre</label>
-    <input id='nombre_form' oninput="test(this.id)">
-    <label>fecha de nacimiento</label>
-    <input id='fecha_form' oninput="test(this.id)">
-    <label>Genero</label>
-    <input id='genero_form' oninput="test(this.id)">
-    <label>dni</label>
-    <input id='dni_form' oninput="test(this.id)">
-    <label>contraseña</label>
-    <input id='pass_form' oninput="test(this.id)">
+<div class='izq' v-if='activo' id='form_container'>
+    <div v-if='!logueado'>
+        <form>
+            <h1>Register</h1>
 
-    <button @click='envio($event)'>enviar</button>
+            <label>Nombre</label>
+            <input name='nombre' oninput="test(this,this.name)">
+
+            <label>fecha de nacimiento</label>
+            <input name='fecha' oninput="test(this,this.name)">
+
+            <label>correo electronico</label>
+            <input name='correo' oninput="test(this,this.name)">
+
+            <label>cuenta bancaria</label>
+            <input name='banco' oninput="test(this,this.name)">
+
+            <label>telefono</label>
+            <input name='telefono' oninput="test(this,this.name)">
+
+            <label>contraseña</label>
+            <input name='passw' oninput="test(this,this.name)">
+
+            <button @click='envio($event,"registro")'>enviar</button>
+        </form>
+
+        <form>
+            <h1>Login</h1>
+            <label>correo</label>
+            <input name='correo' oninput="test(this,this.name)">
+            <label>contraseña</label>
+            <input name='passw' oninput="test(this,this.name)">
+
+        <button @click='envio($event,"login")'>enviar</button>
     </form>
+
+    </div>
+    <div v-else>
+    <h1>{{correo}}</h1>
+    <button @click='deloguear($event)'>desloguear</button>
+    </div>
 
 </div>
 `
@@ -277,7 +352,6 @@ let login_app_object = componente_login.mount("#app_login")
 
 
 
-//TODO: sobre nosotros
 let componente_about = createApp({
     data() {
         $("#about_button").on("click", () => this.activar())
@@ -316,6 +390,98 @@ let about_app_object = componente_about.mount("#app_about")
 
 
 
+//TODO: carrito
+let componente_carrito = createApp({
+    data() {
+        $("#carrito_button").on("click", () => this.activar())
+        return {
+            elementos:{},
+            activo: true,
+            
+        }
+    },
+    methods: {
+        change() {
+        },
+        activar() {
+            desactivar_global()
+            this.activo = true
+        },
+        desactivar() {
+            this.activo = false
+        },
+        add(id, nombre,precio){
+            if(this.elementos[id] == undefined){
+                let elemento = {}
+                elemento["cantidad"] = Math.min(1,datos_ajax_productos[id]["disponibilidad"])
+                elemento["precio"] = precio
+                elemento["nombre"] = nombre
+                elemento["id"]= id
+                this.elementos[id] = elemento
+            }else{
+                this.elementos[id]["cantidad"] +=1
+            } 
+        },
+        cancelar(){
+            this.elementos = {}
+        },
+        comprar(){
+            let datos = {modo:"comprar",datos:this.elementos}
+            $.post("http://localhost/bbdd.php", datos, function (data, status) {
+                // console.log(data,status)
+                cargar_datos_productos()
+            })
+            this.cancelar()
+        }
+
+    },
+    computed:{
+        precio_total(){
+            let precio = 0
+            for (let producto in this.elementos) {
+                let cantidad = Math.min(this.elementos[producto]["cantidad"], Number(datos_ajax_productos[this.elementos[producto].id]["disponibilidad"]))
+                cantidad = Math.max(cantidad,0)
+                precio += this.elementos[producto]["precio"]*cantidad
+                this.elementos[producto]["cantidad"] = cantidad
+            }
+            return Math.round(precio * 100) / 100
+            
+        },
+        no_registrado(){
+            return !login_app_object.logueado
+        }
+
+    },
+
+
+    template: `
+<div v-if='activo'>
+    <h1>Carrito</h1>
+    <div id="productos_carrito">
+
+    <div class="producto_carrito" v-for="prod in elementos">
+        <h1>{{prod.nombre}}</h1>    
+        <p>precio individual:  {{prod.precio}}</p>
+        <input type="number" v-model="prod.cantidad"  >cantidad</input>
+        <button @click="delete elementos[prod.id]"> eliminar producto</button>
+    </div>
+
+    
+    
+    </div>
+    <p>
+    precio total: {{precio_total}} €
+    </p>
+    <p v-if="no_registrado">Para continuar con la compra tienes que estar logueado</p>
+
+    <button @click='comprar()' v-else> comprar</button>
+    <button @click='cancelar()'>cancelar</button>
+
+</div>
+`
+})
+let carrito_app_object = componente_carrito.mount("#app_carrito")
+
 
 
 
@@ -328,4 +494,5 @@ function desactivar_global() {
     producto_app_object.desactivar()
     login_app_object.desactivar()
     about_app_object.desactivar()
+    carrito_app_object.desactivar()
 }

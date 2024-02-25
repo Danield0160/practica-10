@@ -3,9 +3,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS, POST"); 
 header("Access-Control-Allow-Headers: Content-Type");
 
-// $_GET['q']
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' &&  $_GET['modo']== "productos") {
 
     
     $servername = "localhost";
@@ -37,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 
 
-//TODO: Apartado de login y registro
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['modo'] ==  "registro") {
 
 
 
@@ -54,12 +53,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $sql = "INSERT INTO usuarios (nombre,apellidos,dni,nacimiento,postal,email,fijo,movil,iban,credito,password,password_repeat) VALUES(" .'"'. $_POST['nombre'] .'",' .'"'. $_POST['apellidos'] .'",'.'"'. $_POST['dni'] .'",'.'"'. $_POST['nacimiento'] .'",'.'"'. $_POST['postal'] .'",'.'"'. $_POST['email'] .'",'.'"'.$_POST['fijo'] .'",'.'"'.$_POST['movil'] .'",'.'"'.$_POST['iban'] .'",'.'"'.$_POST['credito'] .'",'.'"'.$_POST['password'] .'",'.'"'.$_POST['password_repeat'] .'"'.   ")";
+    $sql = "INSERT INTO usuarios (nombre,fecha_nacimiento,passw,correo,banco,telefono) VALUES(" .'"'. $_POST['nombre'] .'",' .'"'. $_POST['fecha'] .'",'.'"'. $_POST['passw'] .'",'.'"'. $_POST['correo'] .'",'.'"'. $_POST['banco'] .'","'. $_POST['telefono'] .'"'.  ")";
     
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        echo True;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    
+    $conn->close();
+
+
+}elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['modo'] ==  "login") {
+
+
+
+    $servername = "localhost";
+    $username = "practica_10_user_DRM";
+    $password = "password";
+    $dbname = "practica_10_DRM";
+    
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    $sql = "select * from usuarios where correo='".$_POST['correo']."' and passw='".$_POST['passw']."';";
+    $result = $conn->query($sql)->fetch_assoc();
+    if ($result) {
+        // echo json_encode($result->fetch_assoc());
+        echo true;
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    
+    $conn->close();
+
+
+}elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['modo'] ==  "comprar") {
+
+
+
+    $servername = "localhost";
+    $username = "practica_10_user_DRM";
+    $password = "password";
+    $dbname = "practica_10_DRM";
+    
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $datos = $_POST["datos"];
+    for ($i=0; $i < count($datos); $i++) { 
+        echo json_encode($datos[array_keys($datos)[$i]]);
+        
+        $cantidad = $datos[array_keys($datos)[$i]]['cantidad'];
+        $id = $datos[array_keys($datos)[$i]]['id'] +1;
+        $sql = "update productos set disponibilidad = disponibilidad - $cantidad where id = $id;";
+        
+        
+        $result = $conn->query($sql);
+        if ($result) {
+            // echo json_encode($result->fetch_assoc());
+            echo true;
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
     
     $conn->close();

@@ -102,15 +102,20 @@ html[data-scroll="1"] #header{
 }
 .container > div>img{
     width: 100%;
-
+}
+#form_container>div{
+    display: flex;
+    justify-content: space-evenly;
+    
 }
 
 
 
 
+
 #cuerpo{
-    background-color: blue;
-    height: 100vh;
+    background-color: lightblue;
+    height: auto;
 }
 #carousel{
     margin: auto;
@@ -136,7 +141,13 @@ form input{
     display: block;
 }
 
-
+#cuenta_usuario{
+    position: fixed;
+    top: -0;
+    right: 0;
+    z-index: 999;
+    background-color: white;
+}
 
 
 #decorador{
