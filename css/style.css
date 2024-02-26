@@ -14,7 +14,8 @@ body{
 }
 
 #header{
-    background-color: red;
+    /* background-color: red; */
+    background-image: url(https://media.revistaad.es/photos/62b2389fcb047658901833aa/16:9/w_2560%2Cc_limit/GettyImages-998587132.jpg);
     font-family: "IkeaFont";
     color: yellow;
     text-shadow: 5px 2px blue;
@@ -132,6 +133,10 @@ html[data-scroll="1"] #header{
 #app_about{
     background-color: white;
     text-align: center;
+    box-shadow: 3px 3px 3px black;
+    width: 800px;
+    margin: auto;
+    margin-bottom: 250px;
 }
 
 
@@ -165,7 +170,12 @@ html[data-scroll="1"] #header{
 form{
     background-color: white;
     margin-bottom: 10px;
-
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px black;
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+    padding-bottom: 55px;
 }
 form input{
     display: block;
@@ -173,7 +183,10 @@ form input{
     margin: auto;
 }
 form button{
-    width: 100%;
+    width: 95%;
+    margin-top: 5px;
+    position: absolute;
+    bottom: 5px;
 }
 #cuenta_usuario{
     position: fixed;
@@ -186,6 +199,7 @@ form button{
 
 #app_carrito{
     margin-bottom: 20px;
+    margin-top: -250px;
 }
 #app_carrito h1{
     text-align: center;
@@ -219,16 +233,22 @@ form button{
 }
 
 #decorador{
-    background-color: violet;
     height: 1.8vh;
     font-weight: bold;
+    border-top: 2px solid black;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    font-size: medium;
+    background-image: url(https://masterwall.com.au/wp-content/uploads/2021/01/MarbleCoarse_IMG_3821_thumb2-1.jpg);
 }
 #footer{
     position: sticky;
     bottom: -9vh;
-    background-color: green;
+    background-color: rgb(148, 85, 2);
     min-height: 12vh;
     transition: all .1s linear;
+    color: black;
+    margin-top: 150px;
 }
 #footer:hover{
     bottom: 0;
@@ -237,4 +257,7 @@ form button{
 
 #footer>p{
     margin: 2px;
+}
+#cuerpo{
+    margin-bottom: 150px;
 }
